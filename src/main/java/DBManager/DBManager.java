@@ -204,6 +204,20 @@ public class DBManager {
         return rows > 0;
     }
 
+    public static void deleteComment(Long id) {
+
+        try {
+            PreparedStatement statement = connection.prepareStatement("delete from comments where id=?");
+            statement.setLong(1, id);
+            statement.executeUpdate();
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
     public static List<Comment> getAllComments() {
         List<Comment> comments=new ArrayList<>();
         try {

@@ -28,7 +28,7 @@ public class addComment extends HttpServlet {
             comment.setBlog_id(blogId);
             comment.setComment(content);
             DBManager.addComment(comment);
-            response.sendRedirect("/main");
+            response.sendRedirect("/main#commentBlock");
 
         }
     }
