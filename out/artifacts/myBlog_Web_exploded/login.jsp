@@ -21,7 +21,7 @@
                   <%
                        if(request.getParameter("emailError")!=null){
                   %>
-                  <div class="alert alert-warning" role="alert">
+                  <div class="alert alert-warning mt-3" role="alert">
                       Email incorrect!
                   </div>
                   <%

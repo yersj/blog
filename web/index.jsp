@@ -1,7 +1,8 @@
 <%@ page import="java.util.List" %>
 <%@ page import="model.Blog" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="DBManager.DBManager" %><%--
+<%@ page import="DBManager.DBManager" %>
+<%@ page import="model.Comment" %><%--
   Created by IntelliJ IDEA.
   User: Acer
   Date: 31.01.2022
@@ -14,6 +15,7 @@
   <%@include file="head.jsp"%>
 </head>
 <body>
+
     <%@include file="nav.jsp"%>
     <div class="container">
         <div class="row mt-4">
@@ -24,7 +26,7 @@
                     for(Blog blog:list){
 
                 %>
-                <div class="card text-center mb-3">
+                <div class="card text-center mt-5">
                     <div class="card-header">
                         <%=blog.getTitle()%>
                     </div>
@@ -33,12 +35,55 @@
 
                     </div>
                     <div class="card-footer text-muted">
-                        <%=DBManager.getAuthorById(blog.getAuthor_id()).getName()%>
-                    </div>
-                    <div class="card-body">
-                        <a href="/comments?blogId=<%=blog.getId()%>">Comments</a>
+                        Author: <%=DBManager.getAuthorById(blog.getAuthor_id()).getName()%>
                     </div>
 
+                </div>
+                <div>
+                    <div class="mt-3">
+                        <%
+                            Author currentUser=(Author) request.getSession().getAttribute("CURRENT_USER");
+
+                            if(currentUser!=null){
+
+                        %>
+                        <form action="/addComment?blogId=<%=blog.getId()%>" method="post">
+                            <textarea class="form-control" name="comment"></textarea>
+                            <button class="btn btn-success btn-sm mt-3">ADD COMMENT</button>
+                        </form>
+                        <%
+                            }else{
+                        %>
+                        <textarea class="form-control" ></textarea>
+                        <p><a href="/login" class="btn btn-link">sign in </a>to leave a comment</p>
+                        <%
+                            }
+                        %>
+                    </div>
+                    <div class="list-group">
+                        <%
+                            ArrayList<Comment> list1=(ArrayList<Comment>) request.getAttribute("comments");
+                            if(list1!=null){
+                                for(Comment c:list1){
+                                    System.out.println(blog.getId()+"  "+c.getBlog_id()+"  "+c.getComment());
+                                    if(c.getBlog_id().equals(blog.getId())){
+
+                        %>
+                        <a href="#" class="list-group-item list-group-item-action">
+                            <div class="d-flex w-100 justify-content-between">
+                               <div> <p class="mb-1"><%=c.getComment()%></p></div>
+                            </div>
+                            <div>
+                                <h6 class="mb-1"><%=DBManager.getAuthorById(c.getAuthor_id()).getName()%></h6>
+                            </div>
+
+                        </a>
+                        <%
+                            }
+                            }
+                            }
+                        %>
+                    </div>
                 </div>
                 <%
                     }

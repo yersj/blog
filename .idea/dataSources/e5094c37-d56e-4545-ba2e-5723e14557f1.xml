@@ -1145,10 +1145,19 @@
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <key id="356" parent="339" name="PRIMARY">
+    <index id="356" parent="339" name="comments_author__fk">
+      <ColNames>author_id</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="357" parent="339" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
+    <foreign-key id="358" parent="339" name="comments_author__fk">
+      <ColNames>author_id</ColNames>
+      <RefTableName>author</RefTableName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
   </database-model>
 </dataSource>

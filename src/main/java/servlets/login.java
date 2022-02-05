@@ -2,11 +2,13 @@ package servlets;
 
 import DBManager.DBManager;
 import model.Author;
+import model.Comment;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
+import java.util.ArrayList;
 
 @WebServlet(name = "login", value = "/login")
 public class login extends HttpServlet {
@@ -19,6 +21,9 @@ public class login extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         DBManager.setConnection();
         request.setAttribute("blogs",DBManager.getAllBlogs());
+        ArrayList<Comment> allComments=(ArrayList<Comment>) DBManager.getAllComments();
+        request.setAttribute("comments",allComments);
+
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
